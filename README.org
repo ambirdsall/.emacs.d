@@ -1,0 +1,24 @@
+#+TITLE: ambirdsall config
+
+- [x] straight (for packages)
+- [x] evil
+- [x] cool doom theme
+- [x] which-key
+- [x] helm
+- [ ] all the cool helm tie-ins (rg, swoop, etc)
+- [ ] magit
+- [ ] evilified magit
+- [x] leader keybindings
+- [ ] org setup
+- [ ] projectile
+- [ ] replace with register
+- [ ] paredit/smartparens/whatever
+- [ ] outshine
+- [ ] rainbow mode
+- [ ] editorconfig
+
+
+- [ ] scala setup
+- [ ] typescript setup
+- [ ] html setup
+- [ ] elixir setup
