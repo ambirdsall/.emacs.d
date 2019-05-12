@@ -159,8 +159,10 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
 (use-package general
   :straight t
   :config (progn ;; set keybinding s in here, yo
+;; *** global keybindings
       (general-define-key "M-x" 'helm-M-x)
 
+;; *** package-specific keybindings
       (general-define-key
        :states '(normal visual insert emacs)
        :keymaps 'outshine-mode-map
@@ -181,6 +183,7 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        :states '(normal)
        "/" 'helm-swoop)
 
+;; *** leader key keybindings
       (general-define-key
        :states '(normal visual insert emacs)
        :prefix "SPC"
@@ -190,25 +193,32 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
        ":" '(helm-M-x :which-key "M-x")
        "." '((lambda ()(interactive)(dired ".")) :which-key "current directory")
-       "pf"  '(helm-find-file :which-key "find files")
+       "p" '(:ignore t :which-key "project repos")
+       "pf"  '(helm-projectile-find-file-dwim :which-key "find files")
        "ef" '(amb:edit-init-file :which-key "edit init.el")
        "eR" '((lambda ()(interactive)(load-file user-init-file)) :which-key "reload init.el")
        "fed" '(amb:edit-init-file :which-key "edit init.el")
        "fs"  '(save-buffer :which-key "save file")
        ;; git
+       "g" '(:ignore t :which-key "git")
        "gs" '(magit-status :which-key "status")
        ;; Buffers
+       "b" '(:ignore t :which-key "buffers")
        "bb"  '(helm-buffers-list :which-key "buffers list")
        "bd"  '(kill-buffer :which-key "kill buffer")
        ;; help
+       "h" '(:ignore t :which-key "wtf help")
        "hf" '(describe-function :which-key "describe function")
        "hk" '(describe-key :which-key "describe key")
        "hv" '(describe-variable :which-key "describe variable")
        ;; jumping
+       "j" '(:ignore t :which-key "jump")
        "jj" '(ace-jump-mode :which-key "jump to char")
        ;; quitting
-       "qq" '(kill-emacs :which-key "morituri te salutant")
+       "q" '(:ignore t :which-key "morituri te salutant")
+       "qq" 'kill-emacs
        ;; Window
+       "w" '(:ignore t :which-key "windows")
        "wl"  '(windmove-right :which-key "move right")
        "wh"  '(windmove-left :which-key "move left")
        "wk"  '(windmove-up :which-key "move up")
