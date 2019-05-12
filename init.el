@@ -113,7 +113,13 @@
   :config
   (tmux-pane-mode))
 
-;; * Org
+;; ** Git
+(use-package magit
+  :straight t)
+
+(use-package evil-magit
+  :straight t)
+;; ** Org
 (use-package org
   :straight t)
 
@@ -189,6 +195,8 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        "eR" '((lambda ()(interactive)(load-file user-init-file)) :which-key "reload init.el")
        "fed" '(amb:edit-init-file :which-key "edit init.el")
        "fs"  '(save-buffer :which-key "save file")
+       ;; git
+       "gs" '(magit-status :which-key "status")
        ;; Buffers
        "bb"  '(helm-buffers-list :which-key "buffers list")
        "bd"  '(kill-buffer :which-key "kill buffer")
