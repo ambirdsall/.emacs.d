@@ -34,7 +34,7 @@
   (add-to-list 'default-frame-alist '(width . 150)))
 
 ;; ** folding plz
-(hs-minor-mode)
+(add-hook 'prog-mode-hook 'hs-minor-mode)
 
 ;; ** Which Key
 (use-package which-key
