@@ -118,7 +118,7 @@
 
 (use-package evil-magit
   :straight t)
-;; ** Org
+;; ** Org and outline/outshine
 (use-package org
   :straight t)
 
