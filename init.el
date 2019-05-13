@@ -1,9 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
-;; * handle the case where this is launched with `emacs -q --load ~/.emacs.amb/init.el`
+;; * just in case this was launched with `emacs -q --load ~/.emacs.amb/init.el`
 (setq user-init-file (or load-file-name (buffer-file-name)))
 (setq user-emacs-directory (file-name-directory user-init-file))
-
 
 ;; * Bootstrap straight
 (defvar bootstrap-version)
