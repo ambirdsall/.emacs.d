@@ -167,6 +167,7 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
       (general-define-key
        :states '(normal visual insert emacs)
        :keymaps 'outshine-mode-map
+       "<tab>" 'outshine-cycle
        "<backtab>" 'outshine-cycle-buffer)
 
       (general-define-key
