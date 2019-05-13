@@ -148,7 +148,7 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
   (if restrict-to-open-buffers
       (call-interactively #'helm-buffers-list)
     (if (projectile-project-p)
-        (call-interactively #'helm-projectile-find-file)
+        (call-interactively #'helm-projectile-find-file-dwim)
       (call-interactively #'helm-find-files))))
 
 (defun amb:edit-init-file ()
