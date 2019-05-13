@@ -129,12 +129,13 @@
   (add-hook 'prog-mode-hook 'outshine-mode))
 
 ;; * Return of the macOS
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))
-(setq ns-use-proxy-icon  nil)
-(setq frame-title-format nil)
-(setq ns-command-modifier 'meta)
-(setq ns-option-modifier 'super)
+(when (eq system-type 'darwin)
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark))
+  (setq ns-use-proxy-icon  nil)
+  (setq frame-title-format nil)
+  (setq ns-command-modifier 'meta)
+  (setq ns-option-modifier 'super))
 
 ;; * the all-important keybindings
 ;; ** custom commands...
