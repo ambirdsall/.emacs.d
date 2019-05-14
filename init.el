@@ -27,10 +27,13 @@
 (tooltip-mode    -1)
 (menu-bar-mode   -1)
 
-;; ** TODO: default size
+;; ** default size
 (when (display-graphic-p)
   (add-to-list 'default-frame-alist '(height . 72))
   (add-to-list 'default-frame-alist '(width . 150)))
+
+;; ** dired
+(add-hook 'dired-mode-hook (lambda () (dired-hide-details-mode 1)))
 
 ;; ** folding plz
 (add-hook 'prog-mode-hook 'hs-minor-mode)
@@ -38,24 +41,21 @@
 ;; ** Which Key
 (use-package which-key
   :straight t
-  :init
-  (setq which-key-separator " ")
-  (setq which-key-prefix-prefix "+")
-  :config
-  (which-key-mode))
+  :init (setq which-key-separator " "
+	      which-key-prefix-prefix "+")
+  :config (which-key-mode))
 
 ;; ** Theme
 (use-package doom-themes
   :straight t
-  :config
-  (load-theme 'doom-one t))
+  :config (load-theme 'doom-one t))
 
 (use-package all-the-icons
   :straight t)
 
 (use-package doom-modeline
   :straight t
-  :hook (after-init . doom-modeline-mode))
+  :config (doom-modeline-mode 1))
 
 ;; * Terminal sanity
 (unless (display-graphic-p) (xterm-mouse-mode 1))
@@ -97,7 +97,10 @@
   (setq helm-mode-fuzzy-match t)
   (setq helm-completion-in-region-fuzzy-match t)
   (setq helm-candidate-number-list 50)
-  :config (require 'helm-config))
+
+  :config
+  (require 'helm-config)
+  (helm-mode 1))
 
 ;; TODO: helm-ag or w/e
 (straight-use-package 'projectile)
@@ -131,7 +134,7 @@
 (when (eq system-type 'darwin)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
-  (setq ns-use-proxy-icon  nil)
+  (setq ns-use-proxy-icon    nil)
   (setq frame-title-format nil)
   (setq ns-command-modifier 'meta)
   (setq ns-option-modifier 'super))
@@ -162,17 +165,16 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
 ;; *** global keybindings
       (general-define-key "M-x" 'helm-M-x)
 
+      (general-define-key
+       :states '(normal)
+       "/" 'helm-swoop)
+
 ;; *** package-specific keybindings
       (general-define-key
-       :states '(normal visual insert emacs)
-       :keymaps 'outshine-mode-map
-       "<tab>" 'outshine-cycle
-       "<backtab>" 'outshine-cycle-buffer)
-
-      (general-define-key
-       :states '(normal visual insert emacs)
-       :keymaps 'smartparens-mode-map
-       "C-)" 'sp-forward-slurp-sexp)
+       :keymaps 'dired-mode-map
+       :states '(normal)
+       "h" 'dired-up-directory
+       "l" 'dired-find-file)
 
       (general-define-key
        :keymaps 'helm-map
@@ -181,32 +183,39 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        "C-z" 'helm-select-action)
 
       (general-define-key
-       :states '(normal)
-       "/" 'helm-swoop)
+       :keymaps 'outshine-mode-map
+       :states '(normal visual insert emacs)
+       "<tab>" 'outshine-cycle
+       "<backtab>" 'outshine-cycle-buffer)
+
+      (general-define-key
+       :keymaps 'smartparens-mode-map
+       :states '(normal visual insert emacs)
+       "C-)" 'sp-forward-slurp-sexp)
 
 ;; *** leader key keybindings
       (general-define-key
        :states '(normal visual insert emacs)
        :prefix "SPC"
        :non-normal-prefix "M-m"
-       ;; "/"   '(counsel-rg :which-key "ripgrep") ; I'd need counsel for this
+       ;; "/"     '(counsel-rg :which-key "ripgrep") ; I'd need counsel for this
        "SPC" '(amb:find-file-dwim :which-key "find you a file")
        "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
        ":" '(helm-M-x :which-key "M-x")
        "." '((lambda ()(interactive)(dired ".")) :which-key "current directory")
        "p" '(:ignore t :which-key "project repos")
-       "pf"  '(helm-projectile-find-file-dwim :which-key "find files")
+       "pf"    '(helm-projectile-find-file-dwim :which-key "find files")
        "ef" '(amb:edit-init-file :which-key "edit init.el")
        "eR" '((lambda ()(interactive)(load-file user-init-file)) :which-key "reload init.el")
        "fed" '(amb:edit-init-file :which-key "edit init.el")
-       "fs"  '(save-buffer :which-key "save file")
+       "fs"    '(save-buffer :which-key "save file")
        ;; git
        "g" '(:ignore t :which-key "git")
        "gs" '(magit-status :which-key "status")
        ;; Buffers
        "b" '(:ignore t :which-key "buffers")
-       "bb"  '(helm-buffers-list :which-key "buffers list")
-       "bd"  '(kill-buffer :which-key "kill buffer")
+       "bb"    '(helm-buffers-list :which-key "buffers list")
+       "bd"    '(kill-buffer :which-key "kill buffer")
        ;; help
        "h" '(:ignore t :which-key "wtf help")
        "hf" '(describe-function :which-key "describe function")
@@ -220,10 +229,10 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        "qq" 'kill-emacs
        ;; Window
        "w" '(:ignore t :which-key "windows")
-       "wl"  '(windmove-right :which-key "move right")
-       "wh"  '(windmove-left :which-key "move left")
-       "wk"  '(windmove-up :which-key "move up")
-       "wj"  '(windmove-down :which-key "move bottom")
-       "wv"  '(split-window-right :which-key "split right")
-       "ws"  '(split-window-below :which-key "split bottom")
-       "wd"  '(delete-window :which-key "delete window"))))
+       "wl"    '(windmove-right :which-key "move right")
+       "wh"    '(windmove-left :which-key "move left")
+       "wk"    '(windmove-up :which-key "move up")
+       "wj"    '(windmove-down :which-key "move bottom")
+       "wv"    '(split-window-right :which-key "split right")
+       "ws"    '(split-window-below :which-key "split bottom")
+       "wd"    '(delete-window :which-key "delete window"))))
