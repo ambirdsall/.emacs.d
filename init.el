@@ -62,11 +62,11 @@
 
 ;; * Packages
 ;; ** Text Editing
+;; *** evil
 (use-package evil
   :straight t
-  :config
-  (evil-mode 1)
-  (setq evil-disable-insert-state-bindings t))
+  :init (setq evil-disable-insert-state-bindings t)
+  :config (evil-mode 1))
 
 (use-package evil-surround
   :straight t
@@ -96,11 +96,10 @@
   :init
   (setq helm-mode-fuzzy-match t)
   (setq helm-completion-in-region-fuzzy-match t)
-  (setq helm-candidate-number-list 50)
+  (setq helm-candidate-number-list 50))
 
-  :config
-  (require 'helm-config)
-  (helm-mode 1))
+(require 'helm-config)
+(helm-mode 1)
 
 ;; TODO: helm-ag or w/e
 (straight-use-package 'projectile)
