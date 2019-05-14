@@ -55,6 +55,7 @@
 
 (use-package doom-modeline
   :straight t
+  :init (setq doom-modeline-buffer-file-name-style 'truncate-from-project)
   :config (doom-modeline-mode 1))
 
 ;; * Terminal sanity
