@@ -83,12 +83,18 @@
   :straight (:host github :repo "CeleritasCelery/evil-unimpaired")
   :config (evil-unimpaired-mode))
 
-
+;; *** smartparens
 (use-package smartparens
   :straight t
   :config
   (require 'smartparens-config)
   (add-hook 'prog-mode-hook 'smartparens-strict-mode))
+
+;; *** autocompletion
+(use-package company
+  :straight t
+  :config (global-company-mode 1))
+
 
 ;; ** Navigation
 (use-package helm
