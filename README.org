@@ -1,14 +1,14 @@
 #+TITLE: ambirdsall config
 
-* General Packages
-- [x] straight (for packages)
-- [x] evil
-- [x] a good doom theme
-- [x] which-key
-- [x] helm
+* General Packages [8/17]
+- [X] straight (for packages)
+- [X] evil
+- [X] a good doom theme
+- [X] which-key
+- [X] helm
 - [ ] magit
-- [x] leader keybindings
-- [x] org
+- [X] leader keybindings
+- [X] org
 - [ ] undo-tree
 - [ ] projectile
 - [ ] paredit/smartparens/whatever
@@ -16,27 +16,20 @@
 - [ ] rainbow mode
 - [ ] editorconfig
 - [ ] ace jump
-- [ ] doom modeline
+- [X] doom modeline
 - [ ] yasnippet
-** evil extensions and modes to evilify
+* evil extensions and modes to evilify [0/4]
 - [ ] evil-exchange
 - [ ] evil-replace-with-register
 - [ ] magit
 - [ ] undo-tree
-** helm extensions
+* helm extensions [0/3]
 - [ ] helm ag/rg
-- [ ] helm swoop
 - [ ] helm projectile
-* more complicated or ambiguous features
-** company/autocompletion
-** hybrid mode
-** DONE adequate folding
-* languages
+* languages [0/4]
 - [ ] scala setup
 - [ ] typescript setup
 - [ ] html setup
 - [ ] elixir setup
-* spacemacs features it would be nice to steal/copy/reverse engineer
+* spacemacs features it would be nice to steal/copy/reverse engineer [0/1]
 - [ ] toggle between light and dark theme
-* org setup
-** make keybindings for org and evil play nicely together
