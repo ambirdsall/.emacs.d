@@ -148,7 +148,13 @@
 (straight-use-package 'helm-projectile)
 (straight-use-package 'helm-swoop)
 (straight-use-package 'ace-jump-mode)
+(use-package ace-link
+  :straight t
+  :config (ace-link-setup-default))
 
+(use-package avy
+  :straight t
+  :defer t)
 
 ;; Play nicely with tmux
 (use-package tmux-pane
@@ -275,8 +281,9 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        "hv" '(describe-variable :which-key "describe variable")
        ;; jumping
        "j" '(:ignore t :which-key "jump")
-       "jj" '(ace-jump-mode :which-key "jump to char")
-       ;; quitting
+       "jj" '(avy-goto-char-timer :which-key "jump to [start typing]")
+       "jc" '(ace-jump-mode :which-key "jump to char")
+
        "q" '(:ignore t :which-key "morituri te salutant")
        "qq" 'kill-emacs
        ;; Window
