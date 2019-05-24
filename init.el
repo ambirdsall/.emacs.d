@@ -174,21 +174,20 @@
 
 (use-package outshine
   :straight t
-  :config
-  (add-hook 'prog-mode-hook 'outshine-mode))
+  :hook prog-mode)
 
 ;; * Return of the macOS
-(when (eq system-type 'darwin)
+(setq is-mac (eq system-type 'darwin))
+(when is-mac
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
-  (setq ns-use-proxy-icon    nil)
+  (setq ns-use-proxy-icon nil)
   (setq frame-title-format nil)
   (setq ns-command-modifier 'meta)
   (setq ns-option-modifier 'super))
 
-;; * the all-important keybindings
-;; ** custom commands...
-
+;; * the all-important keybindings ** custom commands..
+;; ** custom functions...
 (defun amb:find-file-dwim (restrict-to-open-buffers)
   "Grab the helm and go to a project file quickly.
 
@@ -206,16 +205,23 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
   (find-file user-init-file))
 
 ;; ** ...and their keybindings
+;; reclaim M-0, M-1, ..., M-9
+(dotimes (10 n)
+  (global-unset-key (kbd (format "M-%d" n))))
+
 (use-package general
   :straight t
-  :config (progn ;; set keybinding s in here, yo
-;; *** global keybindings
+  :config (progn ;; let's go crazy
+;; *** global
       (general-define-key "M-x" 'helm-M-x)
 
       (general-define-key
        :states '(normal)
        "/" 'helm-swoop)
 
+;; *** macOS-specific
+      (when is-mac
+        (general-define-key "M-`" 'other-frame))
 
 ;; *** evil-state-specific
       (general-define-key
@@ -251,7 +257,7 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        :states '(normal visual insert emacs)
        "C-)" 'sp-forward-slurp-sexp)
 
-;; *** leader key keybindings
+;; *** leader key
       (general-define-key
        :states '(normal visual insert emacs)
        :prefix "SPC"
@@ -261,32 +267,40 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
        ":" '(helm-M-x :which-key "M-x")
        "." '((lambda ()(interactive)(dired ".")) :which-key "current directory")
-       "p" '(:ignore t :which-key "project repos")
-       "pf"    '(helm-projectile-find-file-dwim :which-key "find files")
+       "U" '(undo-tree-visualize :which-key "undo-tree")
+
+       "b" '(:ignore t :which-key "buffers")
+       "bb" '(helm-buffers-list :which-key "buffers list")
+       "bd" '(kill-buffer :which-key "kill buffer")
+       "bs" '((lambda ()(interactive)(switch-to-buffer "*scratch*")) :which-key "scratch buffer")
+
+       "e" '(:ignore t :which-key "emacs/init")
        "ef" '(amb:edit-init-file :which-key "edit init.el")
        "eR" '((lambda ()(interactive)(load-file user-init-file)) :which-key "reload init.el")
+
        "fed" '(amb:edit-init-file :which-key "edit init.el")
        "fs"    '(save-buffer :which-key "save file")
-       ;; git
+
        "g" '(:ignore t :which-key "git")
+       "gm" 'magit-dispatch
        "gs" '(magit-status :which-key "status")
-       ;; Buffers
-       "b" '(:ignore t :which-key "buffers")
-       "bb"    '(helm-buffers-list :which-key "buffers list")
-       "bd"    '(kill-buffer :which-key "kill buffer")
-       ;; help
-       "h" '(:ignore t :which-key "wtf help")
-       "hf" '(describe-function :which-key "describe function")
-       "hk" '(describe-key :which-key "describe key")
-       "hv" '(describe-variable :which-key "describe variable")
-       ;; jumping
+       "gS" '(magit-stage-file :which-key "stage file")
+
+       "h" '(help-command :which-key "halp, wtf")
+
        "j" '(:ignore t :which-key "jump")
        "jj" '(avy-goto-char-timer :which-key "jump to [start typing]")
        "jc" '(ace-jump-mode :which-key "jump to char")
 
+       "o" '(:ignore t :which-key "")
+       "of" '(evil-first-non-blank :which-key "goto first non-blank")
+
+       "p" '(:ignore t :which-key "project repos")
+       "pf"    '(helm-projectile-find-file-dwim :which-key "find files")
+
        "q" '(:ignore t :which-key "morituri te salutant")
        "qq" 'kill-emacs
-       ;; Window
+
        "w" '(:ignore t :which-key "windows")
        "wl"    '(windmove-right :which-key "move right")
        "wh"    '(windmove-left :which-key "move left")
@@ -294,4 +308,13 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        "wj"    '(windmove-down :which-key "move bottom")
        "wv"    '(split-window-right :which-key "split right")
        "ws"    '(split-window-below :which-key "split bottom")
-       "wd"    '(delete-window :which-key "delete window"))))
+       "wd"    '(delete-window :which-key "delete window")
+
+       ")" '(:ignore t :which-key "smartparens")
+       ")b" '(sp-forward-barf-sexp :which-key "barf forwards")
+       ")s" '(sp-forward-slurp-sexp :which-key "slurp forwards")
+
+       "(" '(:ignore t :which-key "smartparens")
+       "(b" '(sp-backward-barf-sexp :which-key "barf backwards")
+       "(s" '(sp-backward-slurp-sexp :which-key "slurp backwards")
+       )))
