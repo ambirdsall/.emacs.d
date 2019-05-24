@@ -70,31 +70,58 @@
   :config (evil-mode 1))
 
 (use-package evil-surround
+  :after evil
   :straight t
   :config (evil-surround-mode))
 (use-package evil-visualstar
+  :after evil
   :straight t
   :config (evil-visualstar-mode))
 (use-package evil-commentary
+  :after evil
   :straight t
   :config
   (evil-commentary-mode))
 (use-package evil-unimpaired
+  :after evil
   :straight (:host github :repo "CeleritasCelery/evil-unimpaired")
   :config (evil-unimpaired-mode))
+(use-package evil-replace-with-register
+  :after evil
+  :straight t
+  :init (setq evil-replace-with-register-key (kbd "gr"))
+  :config (evil-replace-with-register-install))
+(use-package evil-exchange
+  :after evil
+  :straight t
+  :config (evil-exchange-install))
+(use-package evil-collection
+  :after evil
+  :straight t
+  :init (setq evil-want-keybinding nil)
+  :config (evil-collection-init))
 
 ;; *** smartparens
 (use-package smartparens
   :straight t
-  :config
-  (require 'smartparens-config)
-  (add-hook 'prog-mode-hook 'smartparens-strict-mode))
+  :hook (prog-mode . smartparens-strict-mode)
+  :config (require 'smartparens-config))
 
 ;; *** autocompletion
 (use-package company
   :straight t
   :config (global-company-mode 1))
 
+;; *** editorconfig
+(use-package editorconfig
+  :straight t
+  :defer t
+  :config (editor-config-mode 1))
+
+;; *** undo
+(use-package undo-tree
+  :straight t
+  :defer t)
 
 ;; ** Navigation
 (use-package helm
@@ -175,7 +202,18 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        :states '(normal)
        "/" 'helm-swoop)
 
-;; *** package-specific keybindings
+
+;; *** evil-state-specific
+      (general-define-key
+       :states '(insert replace)
+       "C-h" 'help-command
+       "C-k" 'kill-line)
+
+      (general-define-key
+       :states '(normal)
+       "U" 'undo-tree-visualize)
+
+;; *** package-specific
       (general-define-key
        :keymaps 'dired-mode-map
        :states '(normal)
