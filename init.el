@@ -58,6 +58,14 @@
   :init (setq doom-modeline-buffer-file-name-style 'truncate-from-project)
   :config (doom-modeline-mode 1))
 
+;; ** a non-audible, non-obnoxious bell
+(setq ring-bell-function
+      (lambda ()
+	(let ((orig-fg (face-foreground 'mode-line)))
+	  (set-face-foreground 'mode-line "#F2804F")
+	  (run-with-idle-timer 0.1 nil
+			       (lambda (fg) (set-face-foreground 'mode-line fg))
+			       orig-fg))))
 ;; * Terminal sanity
 (unless (display-graphic-p) (xterm-mouse-mode 1))
 
