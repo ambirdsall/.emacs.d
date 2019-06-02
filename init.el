@@ -206,7 +206,7 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
 
 ;; ** ...and their keybindings
 ;; reclaim M-0, M-1, ..., M-9
-(dotimes (10 n)
+(dotimes (n 10)
   (global-unset-key (kbd (format "M-%d" n))))
 
 (use-package general
