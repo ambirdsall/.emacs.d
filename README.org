@@ -1,6 +1,7 @@
 #+TITLE: ambirdsall config
 
 * General Packages [15/17]
+** done
 - [X] straight (for packages)
 - [X] evil
 - [X] a good doom theme
@@ -13,11 +14,13 @@
 - [X] projectile
 - [X] smartparens
 - [X] outshine
-- [ ] rainbow mode
 - [X] editorconfig
 - [X] ace jump
 - [X] doom modeline
+
+** undone
 - [ ] yasnippet
+- [ ] rainbow mode
 * evil extensions and modes to evilify [3/3]
 - [X] evil-exchange
 - [X] evil-replace-with-register
