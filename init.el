@@ -278,8 +278,10 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        "ef" '(amb:edit-init-file :which-key "edit init.el")
        "eR" '((lambda ()(interactive)(load-file user-init-file)) :which-key "reload init.el")
 
+       "f" '(:ignore t :which-key "files")
        "fed" '(amb:edit-init-file :which-key "edit init.el")
-       "fs"    '(save-buffer :which-key "save file")
+       "ff" '(helm-find-files :which-key "find file")
+       "fs" '(save-buffer :which-key "save file")
 
        "g" '(:ignore t :which-key "git")
        "gm" 'magit-dispatch
@@ -302,13 +304,14 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
        "qq" 'kill-emacs
 
        "w" '(:ignore t :which-key "windows")
-       "wl"    '(windmove-right :which-key "move right")
-       "wh"    '(windmove-left :which-key "move left")
-       "wk"    '(windmove-up :which-key "move up")
-       "wj"    '(windmove-down :which-key "move bottom")
-       "wv"    '(split-window-right :which-key "split right")
-       "ws"    '(split-window-below :which-key "split bottom")
-       "wd"    '(delete-window :which-key "delete window")
+       "wl" '(windmove-right :which-key "move right")
+       "wm" '(delete-other-windows :which-key "only me")
+       "wh" '(windmove-left :which-key "move left")
+       "wk" '(windmove-up :which-key "move up")
+       "wj" '(windmove-down :which-key "move bottom")
+       "wv" '(split-window-right :which-key "split right")
+       "ws" '(split-window-below :which-key "split bottom")
+       "wd" '(delete-window :which-key "delete window")
 
        ")" '(:ignore t :which-key "smartparens")
        ")b" '(sp-forward-barf-sexp :which-key "barf forwards")
@@ -316,5 +319,4 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
 
        "(" '(:ignore t :which-key "smartparens")
        "(b" '(sp-backward-barf-sexp :which-key "barf backwards")
-       "(s" '(sp-backward-slurp-sexp :which-key "slurp backwards")
-       )))
+       "(s" '(sp-backward-slurp-sexp :which-key "slurp backwards"))))
