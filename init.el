@@ -48,7 +48,30 @@
 ;; ** Theme
 (use-package doom-themes
   :straight t
-  :config (load-theme 'doom-one t))
+  :config
+  (load-theme 'doom-one-light t)
+  (load-theme 'doom-one t))
+
+(defvar *darkmode* t)
+
+(defun amb:dark-mode ()
+  "Sets the theme to doom-one."
+  (interactive)
+  (enable-theme 'doom-one)
+  (setq *darkmode* t))
+
+(defun amb:light-mode ()
+  "Sets the theme to doom-one-light."
+  (interactive)
+  (enable-theme 'doom-one-light)
+  (setq *darkmode* nil))
+
+(defun amb:toggle-theme ()
+  "Toggles the current theme between doom-one and doom-one-light."
+  (interactive)
+  (if (eq *darkmode* t)
+      (amb:light-mode)
+    (amb:dark-mode)))
 
 (use-package all-the-icons
   :straight t)
@@ -302,6 +325,10 @@ If called with a prefix arg, restricts to open buffers; by default, any file."
 
        "q" '(:ignore t :which-key "morituri te salutant")
        "qq" 'kill-emacs
+
+       "t" '(:ignore t :which-key "toggles")
+       "tD" 'toggle-debug-on-error
+       "tt" '(amb:toggle-theme :which-key "light/dark theme")
 
        "w" '(:ignore t :which-key "windows")
        "wl" '(windmove-right :which-key "move right")

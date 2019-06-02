@@ -30,7 +30,7 @@
 - [ ] typescript setup
 - [ ] html setup
 - [ ] elixir setup
-* spacemacs features it would be nice to steal/copy/reverse engineer [0/2]
-- [ ] toggle between light and dark theme
+* spacemacs features it would be nice to steal/copy/reverse engineer [1/3]
+- [X] toggle between light and dark theme
 - [ ] ~smerge-transient-state~
 - [ ] spaces/eyebrowse/layouts/workspaces/whatever
